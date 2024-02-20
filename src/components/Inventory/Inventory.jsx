@@ -12,6 +12,14 @@ export const Inventory = inject("inventoryStore")(
     const addItem = () => {
       props.inventoryStore.add(name, 0);
     };
+
+    const onBay = (item) => {
+      props.inventoryStore.bay(item.id);
+    };
+
+    const onChangePrice = (item) => {
+      props.inventoryStore.changePrice(10, item.id);
+    };
     return (
       <div>
         <input type="text" onChange={onChange} />
@@ -21,9 +29,11 @@ export const Inventory = inject("inventoryStore")(
           {props.inventoryStore.items.map((item) => (
             <Fragment key={item.id}>
               <div>{item.name}</div>
+              <div>{item.price}</div>
               <div className="">
-                <button onClick={props.inventoryStore.bay(item.id)}>bay</button>
-                {`${item.isPerched}`}
+                <button onClick={() => onBay(item)}>bay</button>
+                {`${item.isPerched ? "perched" : ""}`}
+                <button onClick={() => onChangePrice(item)}>changePrice</button>
               </div>
             </Fragment>
           ))}
